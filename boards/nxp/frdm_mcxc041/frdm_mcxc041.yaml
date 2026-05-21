@@ -1,0 +1,28 @@
+#
+# Copyright 2024 NXP
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+identifier: frdm_mcxc041
+name: NXP FRDM-MCXC041
+type: mcu
+arch: arm
+ram: 2
+flash: 32
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - adc
+  - counter
+  - flash
+  - gpio
+  - i2c
+  - pwm
+  - uart
+testing:
+  ignore_tags:
+    - net
+    - bluetooth
+vendor: nxp
