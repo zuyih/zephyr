@@ -1,0 +1,6 @@
+board:
+  name: frdm_mcxc041
+  full_name: FRDM-MCXC041
+  vendor: nxp
+  socs:
+    - name: mcxc041

@@ -12,6 +12,7 @@ family:
   - name: mcxn236
 - name: mcxc
   socs:
+  - name: mcxc041
   - name: mcxc141
   - name: mcxc142
   - name: mcxc242
