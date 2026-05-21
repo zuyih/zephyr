@@ -1,0 +1,67 @@
+/*
+ * Copyright 2024 NXP
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <nxp/mcx/nxp_mcxc_common.dtsi>
+
+&sram0 {
+	reg = <0x1ffffe00 DT_SIZE_K(2)>;
+};
+
+&flash0 {
+	reg = <0 DT_SIZE_K(32)>;
+};
+
+/* IRQ 31 is the PORTB pin detect interrupt on MCXC041. */
+&gpiob {
+	interrupts = <31 2>;
+};
+
+/* MCXC041 ADC0 has no differential mode. */
+&adc0 {
+	/delete-property/ has-differential-mode;
+};
+
+/*
+ * Override the clock-name cell for peripherals whose source is the MCG
+ * peripheral / IRC48M clock. The shared nxp_mcxc_common.dtsi encodes
+ * KINETIS_SIM_MCGPCLK (= 18), a value that matches kCLOCK_McgIrc48MClk in
+ * the larger MCXC variants' HAL enum (MCXC242/444 = 18). MCXC041's HAL has
+ * a smaller enum where kCLOCK_McgIrc48MClk = 10, so 18 is out of range:
+ *   - CLOCK_GetFreq(18) returns 0 -> drivers can't compute baud/prescaler
+ *   - soc.c's *_CLOCK_SEL macros never match -> SIM_SOPT2 source bits get
+ *     set to 00 (disabled) -> module has no clock at all
+ * Re-encode with 10 so both the rate query and the SoC's CLOCK_SEL macros
+ * resolve to IRC48M (48 MHz).
+ */
+&lpuart0 {
+	clocks = <&sim KINETIS_SIM_CLOCK(10, 0x1038, 20)>;
+};
+
+&tpm0 {
+	clocks = <&sim KINETIS_SIM_CLOCK(10, 0x103c, 24)>;
+};
+
+&tpm1 {
+	clocks = <&sim KINETIS_SIM_CLOCK(10, 0x103c, 25)>;
+};
+
+/*
+ * Peripherals of the MCXC family that MCXC041 does not have. The portc node
+ * is kept because the NXP PORT pinctrl driver requires it.
+ */
+/delete-node/ &portd;
+/delete-node/ &porte;
+/delete-node/ &gpioc;
+/delete-node/ &gpiod;
+/delete-node/ &gpioe;
+/delete-node/ &i2c1;
+/delete-node/ &usb;
+/delete-node/ &lpuart1;
+/delete-node/ &uart2;
+/delete-node/ &tpm2;
+/delete-node/ &pit0;
+/delete-node/ &dma;
+/delete-node/ &dac;
