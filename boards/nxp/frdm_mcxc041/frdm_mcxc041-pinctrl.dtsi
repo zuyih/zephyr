@@ -1,0 +1,63 @@
+/*
+ * Copyright 2024 NXP
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <nxp/mcx/mcxc/pinctrl/MCXC041VFK-pinctrl.h>
+
+&pinctrl {
+	pinmux_lpuart0: pinmux_lpuart0 {
+		group0 {
+			pinmux = <LPUART0_RX_PTB2>,
+				 <LPUART0_TX_PTB1>;
+			drive-strength = "low";
+			slew-rate = "slow";
+		};
+	};
+
+	pinmux_i2c0: pinmux_i2c0 {
+		group0 {
+			pinmux = <I2C0_SCL_PTB3>,
+				 <I2C0_SDA_PTB4>;
+			drive-strength = "low";
+			drive-open-drain;
+			slew-rate = "fast";
+		};
+	};
+
+	pinmux_tpm0: pinmux_tpm0 {
+		group0 {
+			pinmux = <TPM0_CH0_PTB11>,
+				 <TPM0_CH1_PTB10>;
+			drive-strength = "low";
+			slew-rate = "slow";
+		};
+	};
+
+	pinmux_tpm1: pinmux_tpm1 {
+		group0 {
+			pinmux = <TPM1_CH0_PTB7>,
+				 <TPM1_CH1_PTB13>;
+			drive-strength = "low";
+			slew-rate = "slow";
+		};
+	};
+
+	pinmux_adc0: pinmux_adc0 {
+		group0 {
+			pinmux = <ADC0_SE3_PTA8>,
+				 <ADC0_SE2_PTA9>;
+			drive-strength = "low";
+			slew-rate = "slow";
+		};
+	};
+
+	pinmux_cmp: pinmux_cmp {
+		group0 {
+			pinmux = <CMP0_IN0_PTA12>;
+			drive-strength = "high";
+			slew-rate = "fast";
+		};
+	};
+};
