@@ -58,7 +58,7 @@
 };
 
 &subclk {
-	status = "okay";
+	status = "disabled";
 };
 
 &pll {
