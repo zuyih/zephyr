@@ -1,0 +1,313 @@
+/*
+ * Copyright (c) 2026 Alientek
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+#include <zephyr/dt-bindings/memory-controller/renesas,ra-sdram.h>
+#include "dmra8t2-pinctrl.dtsi"
+
+/ {
+	leds {
+		compatible = "gpio-leds";
+
+		led0: led0 {
+			gpios = <&ioport2 7 GPIO_ACTIVE_LOW>;
+			label = "LED0";
+		};
+
+		led1: led1 {
+			gpios = <&ioportb 5 GPIO_ACTIVE_LOW>;
+			label = "LED1";
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+
+		key0: key0 {
+			gpios = <&ioport7 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch KEY0";
+			zephyr,code = <INPUT_KEY_0>;
+		};
+
+		key1: key1 {
+			gpios = <&ioportd 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch KEY1";
+			zephyr,code = <INPUT_KEY_1>;
+		};
+
+		/*
+		 * P201 doubles as the MD boot mode pin. It is only sampled at
+		 * reset, so it can be used as a third user button afterwards.
+		 */
+		boot_key: boot {
+			gpios = <&ioport2 1 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch BOOT";
+			zephyr,code = <INPUT_KEY_2>;
+		};
+	};
+
+	/*
+	 * 32 MB (256 Mbit) Winbond W9825G6KB on the ATK-CNRA8T2 core module,
+	 * 13 row / 9 column address bits, 4 banks, 16 bit data bus.
+	 */
+	sdram1: sdram@68000000 {
+		compatible = "zephyr,memory-region", "mmio-sram";
+		device_type = "memory";
+		reg = <0x68000000 DT_SIZE_M(32)>;
+		zephyr,memory-region = "SDRAM";
+		status = "disabled";
+	};
+
+	aliases {
+		watchdog0 = &wdt0;
+		sdhc0 = &sdhc0;
+	};
+};
+
+&xtal {
+	clock-frequency = <DT_FREQ_M(24)>;
+	mosel = <0>;
+	#clock-cells = <0>;
+	status = "okay";
+};
+
+&subclk {
+	status = "okay";
+};
+
+&pll {
+	status = "okay";
+
+	pllp {
+		status = "okay";
+	};
+
+	pllq {
+		status = "okay";
+	};
+
+	pllr {
+		status = "okay";
+	};
+};
+
+&pll2 {
+	status = "okay";
+
+	pll2p {
+		status = "okay";
+	};
+
+	pll2q {
+		status = "okay";
+	};
+
+	pll2r {
+		status = "okay";
+	};
+};
+
+&sciclk {
+	clocks = <&pll2r>;
+	div = <4>;
+	status = "okay";
+};
+
+&eswclk {
+	clocks = <&pllp>;
+	div = <4>;
+	status = "okay";
+};
+
+&eswphyclk {
+	clocks = <&pllp>;
+	div = <2>;
+	status = "okay";
+};
+
+&ethphyclk {
+	clocks = <&pllr>;
+	div = <16>;
+	status = "okay";
+};
+
+&canfdclk {
+	status = "okay";
+};
+
+&gptclk {
+	status = "okay";
+};
+
+&uclk {
+	status = "okay";
+};
+
+&ioport0 {
+	status = "okay";
+};
+
+&ioport1 {
+	status = "okay";
+};
+
+&ioport2 {
+	status = "okay";
+};
+
+&ioport3 {
+	status = "okay";
+};
+
+&ioport4 {
+	status = "okay";
+};
+
+&ioport5 {
+	status = "okay";
+};
+
+&ioport6 {
+	status = "okay";
+};
+
+&ioport7 {
+	status = "okay";
+};
+
+&ioport8 {
+	status = "okay";
+};
+
+&ioport9 {
+	status = "okay";
+};
+
+&ioporta {
+	status = "okay";
+};
+
+&ioportb {
+	status = "okay";
+};
+
+&ioportc {
+	status = "okay";
+};
+
+&ioportd {
+	status = "okay";
+};
+
+&sci0 {
+	pinctrl-0 = <&sci0_default>;
+	pinctrl-names = "default";
+
+	uart0: uart {};
+};
+
+&sci4 {
+	pinctrl-0 = <&sci4_default>;
+	pinctrl-names = "default";
+
+	uart4: uart {};
+};
+
+&sci7 {
+	pinctrl-0 = <&sci7_default>;
+	pinctrl-names = "default";
+
+	uart7: uart {};
+};
+
+&sci9 {
+	pinctrl-0 = <&sci9_default>;
+	pinctrl-names = "default";
+
+	uart9: uart {};
+};
+
+&iic2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	clock-frequency = <DT_FREQ_K(400)>;
+	pinctrl-0 = <&iic2_default>;
+	pinctrl-names = "default";
+};
+
+&spi0 {
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-names = "default";
+};
+
+&canfd_global {
+	canfd1 {
+		pinctrl-0 = <&canfd1_default>;
+		pinctrl-names = "default";
+		rx-max-filters = <16>;
+
+		can-transceiver {
+			max-bitrate = <1000000>;
+		};
+	};
+};
+
+&usbfs {
+	pinctrl-0 = <&usbfs_default>;
+	pinctrl-names = "default";
+	maximum-speed = "full-speed";
+};
+
+&sdhc0 {
+	pinctrl-0 = <&sdhc0_default>;
+	pinctrl-names = "default";
+	card-detect;
+
+	sdmmc {
+		compatible = "zephyr,sdmmc-disk";
+		disk-name = "SD";
+		status = "disabled";
+	};
+};
+
+&pwm5 {
+	pinctrl-0 = <&pwm5_default>;
+	pinctrl-names = "default";
+};
+
+&pwm7 {
+	pinctrl-0 = <&pwm7_default>;
+	pinctrl-names = "default";
+};
+
+&pwm11 {
+	pinctrl-0 = <&pwm11_default>;
+	pinctrl-names = "default";
+};
+
+&sdram {
+	pinctrl-0 = <&sdram_default>;
+	pinctrl-names = "default";
+	auto-refresh-interval = <SDRAM_AUTO_REFRESH_INTERVAL_10CYCLES>;
+	auto-refresh-count = <SDRAM_AUTO_REFRESH_COUNT_8TIMES>;
+	precharge-cycle-count = <SDRAM_AUTO_PRECHARGE_CYCLE_3CYCLES>;
+	multiplex-addr-shift = "9-bit";
+	endian-mode = "little-endian";
+	continuous-access;
+	bus-width = "16-bit";
+
+	bank@0 {
+		reg = <0>;
+		renesas,ra-sdram-timing = <SDRAM_TRAS_6CYCLES
+					   SDRAM_TRCD_3CYCLES
+					   SDRAM_TRP_3CYCLES
+					   SDRAM_TWR_2CYCLES
+					   SDRAM_TCL_3CYCLES
+					   977
+					   SDRAM_TREFW_8CYCLES>;
+	};
+};

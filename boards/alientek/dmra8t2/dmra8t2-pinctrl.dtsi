@@ -1,0 +1,274 @@
+/*
+ * Copyright (c) 2026 Alientek
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&pinctrl {
+	/* SCI0 - USB to serial converter (CH343P, USB-C J3) */
+	sci0_default: sci0_default {
+		group1 {
+			/* TXD0_B: P603 */
+			psels = <RA_PSEL(RA_PSEL_SCI_0, 6, 3)>;
+			drive-strength = "medium";
+		};
+
+		group2 {
+			/* RXD0_B: P602 */
+			psels = <RA_PSEL(RA_PSEL_SCI_0, 6, 2)>;
+		};
+	};
+
+	/* SCI4 - ATK-MODULE header (CN2) */
+	sci4_default: sci4_default {
+		group1 {
+			/* TXD4_C: P714 */
+			psels = <RA_PSEL(RA_PSEL_SCI_4, 7, 14)>;
+			drive-strength = "medium";
+		};
+
+		group2 {
+			/* RXD4_C: P715 */
+			psels = <RA_PSEL(RA_PSEL_SCI_4, 7, 15)>;
+		};
+	};
+
+	/* SCI7 - HMI serial screen (CN3) or RS232 (selected by jumper P1) */
+	sci7_default: sci7_default {
+		group1 {
+			/* TXD7_C: PC03 */
+			psels = <RA_PSEL(RA_PSEL_SCI_7, 12, 3)>;
+			drive-strength = "medium";
+		};
+
+		group2 {
+			/* RXD7_C: PC04 */
+			psels = <RA_PSEL(RA_PSEL_SCI_7, 12, 4)>;
+		};
+	};
+
+	/* SCI9 - RS485 transceiver (TP8485E, CN2) */
+	sci9_default: sci9_default {
+		group1 {
+			/* TXD9_B: P209 */
+			psels = <RA_PSEL(RA_PSEL_SCI_9, 2, 9)>;
+			drive-strength = "medium";
+		};
+
+		group2 {
+			/* RXD9_B: P208 */
+			psels = <RA_PSEL(RA_PSEL_SCI_9, 2, 8)>;
+		};
+	};
+
+	/* IIC2 - routed to the encoder header CN11 (4.7k pull-ups fitted) */
+	iic2_default: iic2_default {
+		group1 {
+			/* SCL2_B: P515, SDA2_B: P514 */
+			psels = <RA_PSEL(RA_PSEL_I2C, 5, 15)>,
+				<RA_PSEL(RA_PSEL_I2C, 5, 14)>;
+			drive-strength = "medium";
+			drive-open-drain;
+		};
+	};
+
+	/* SPI0 channel A - SPI LCD / 2.4G wireless header (U3) */
+	spi0_default: spi0_default {
+		group1 {
+			/* MISOA_A: P313, MOSIA_A: P202, SSLA0_A: P204 */
+			psels = <RA_PSEL(RA_PSEL_SPI, 3, 13)>,
+				<RA_PSEL(RA_PSEL_SPI, 2, 2)>,
+				<RA_PSEL(RA_PSEL_SPI, 2, 4)>;
+			drive-strength = "high";
+		};
+
+		group2 {
+			/* RSPCKA_A: P203 */
+			psels = <RA_PSEL(RA_PSEL_SPI, 2, 3)>;
+			drive-strength = "highspeed-high";
+		};
+	};
+
+	/* CANFD1 - TJA1050 transceiver (CN2) */
+	canfd1_default: canfd1_default {
+		group1 {
+			/* CRX1: PC15, CTX1: P415 */
+			psels = <RA_PSEL(RA_PSEL_CANFD, 12, 15)>,
+				<RA_PSEL(RA_PSEL_CANFD, 4, 15)>;
+			drive-strength = "low";
+		};
+	};
+
+	/* USBFS device (USB-C J4) */
+	usbfs_default: usbfs_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_USBFS, 8, 15)>, /* USB_DM: P815 */
+				<RA_PSEL(RA_PSEL_USBFS, 8, 14)>, /* USB_DP: P814 */
+				<RA_PSEL(RA_PSEL_USBFS, 4, 7)>;	 /* USB_VBUS: P407 */
+			drive-strength = "high";
+		};
+	};
+
+	/* SDHI channel 0 - micro SD card socket */
+	sdhc0_default: sdhc0_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_SDHI, 13, 7)>, /* SD0CD_C: PD07 */
+				<RA_PSEL(RA_PSEL_SDHI, 13, 4)>, /* SD0CMD_C: PD04 */
+				<RA_PSEL(RA_PSEL_SDHI, 13, 3)>, /* SD0DAT0_C: PD03 */
+				<RA_PSEL(RA_PSEL_SDHI, 13, 2)>, /* SD0DAT1_C: PD02 */
+				<RA_PSEL(RA_PSEL_SDHI, 13, 1)>, /* SD0DAT2_C: PD01 */
+				<RA_PSEL(RA_PSEL_SDHI, 1, 11)>; /* SD0DAT3_C: P111 */
+			drive-strength = "high";
+		};
+
+		group2 {
+			psels = <RA_PSEL(RA_PSEL_SDHI, 13, 5)>; /* SD0CLK_C: PD05 */
+			drive-strength = "highspeed-high";
+		};
+	};
+
+	/* Shared MDIO bus of both YT8512C PHYs */
+	mdio0_default: mdio0_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_ETH_MII, 7, 8)>; /* ET0_MDC: P708 */
+			drive-strength = "high";
+		};
+
+		group2 {
+			psels = <RA_PSEL(RA_PSEL_ETH_MII, 7, 9)>; /* ET0_MDIO: P709 */
+			drive-open-drain;
+		};
+	};
+
+	/*
+	 * ETHPHYCLK output on P902. Both PHYs run from their own 25 MHz crystal
+	 * on this board (R45 is not fitted), so this state is never applied - it
+	 * is only kept for boards/reworks that feed the PHYs from the MCU.
+	 */
+	ethphyclk_default: ethphyclk_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_ETHPHYCLK, 9, 2)>; /* ETHPHYCLK: P902 */
+			drive-strength = "high";
+		};
+	};
+
+	/* ENET0 (RJ45 J5), MII */
+	eth0_default: eth0_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_ETH_MII, 7, 10)>, /* MII_LINKSTA: P710 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 5)>,  /* MII_TX_EN: P705 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 11, 1)>, /* MII_TX_CLK: PB01 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 11, 0)>, /* MII_TXD0: PB00 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 11, 2)>, /* MII_TXD1: PB02 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 11, 3)>, /* MII_TXD2: PB03 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 11, 4)>, /* MII_TXD3: PB04 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 4)>,  /* MII_RX_ER: P704 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 4, 5)>,  /* MII_RX_DV: P405 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 3)>,  /* MII_RX_CLK: P703 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 2)>,  /* MII_RXD0: P702 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 1)>,  /* MII_RXD1: P701 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 7, 0)>,  /* MII_RXD2: P700 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 4, 6)>;  /* MII_RXD3: P406 */
+			drive-strength = "high";
+		};
+	};
+
+	/* ENET1 (RJ45 J6), MII */
+	eth1_default: eth1_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_ETH_MII, 1, 6)>,  /* MII_LINKSTA: P106 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 10)>, /* MII_TX_EN: P310 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 11)>, /* MII_TX_CLK: P311 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 7)>,  /* MII_TXD0: P307 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 6)>,  /* MII_TXD1: P306 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 5)>,  /* MII_TXD2: P305 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 4)>,  /* MII_TXD3: P304 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 3, 12)>, /* MII_RX_ER: P312 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 2, 6)>,  /* MII_RX_DV: P206 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 9, 5)>,  /* MII_RX_CLK: P905 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 9, 6)>,  /* MII_RXD0: P906 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 9, 7)>,  /* MII_RXD1: P907 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 9, 8)>,  /* MII_RXD2: P908 */
+				<RA_PSEL(RA_PSEL_ETH_MII, 9, 9)>;  /* MII_RXD3: P909 */
+			drive-strength = "high";
+		};
+	};
+
+	/* GPT5 channel A - servo 1 pulse (SRV1) */
+	pwm5_default: pwm5_default {
+		group1 {
+			/* GTIOC5A: P915 */
+			psels = <RA_PSEL(RA_PSEL_GPT1, 9, 15)>;
+		};
+	};
+
+	/* GPT7 channel B - servo 2 pulse (SRV2) */
+	pwm7_default: pwm7_default {
+		group1 {
+			/* GTIOC7B: P303 */
+			psels = <RA_PSEL(RA_PSEL_GPT1, 3, 3)>;
+		};
+	};
+
+	/* GPT11 - stepper driver 1/2 pulse outputs (STEP1/STEP2) */
+	pwm11_default: pwm11_default {
+		group1 {
+			/* GTIOC11A: P800 (ST1_PUL) */
+			psels = <RA_PSEL(RA_PSEL_GPT1, 8, 0)>;
+		};
+
+		group2 {
+			/* GTIOC11B: P801 (ST2_PUL) */
+			psels = <RA_PSEL(RA_PSEL_GPT1, 8, 1)>;
+		};
+	};
+
+	/* 32 MB W9825G6KB SDRAM on the ATK-CNRA8T2 core module */
+	sdram_default: sdram_default {
+		group1 {
+			psels = <RA_PSEL(RA_PSEL_BUS, 10, 4)>, /* SDRAM_A0: PA04 (A1) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 3)>, /* SDRAM_A1: PA03 (A2) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 2)>, /* SDRAM_A2: PA02 (A3) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 1)>, /* SDRAM_A3: PA01 (A4) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 0)>, /* SDRAM_A4: PA00 (A5) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 3)>,  /* SDRAM_A5: P503 (A6) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 4)>,  /* SDRAM_A6: P504 (A7) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 5)>,  /* SDRAM_A7: P505 (A8) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 6)>,  /* SDRAM_A8: P506 (A9) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 7)>,  /* SDRAM_A9: P507 (A10) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 8)>,  /* SDRAM_A10: P508 (A11) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 9)>,  /* SDRAM_A11: P509 (A12) */
+				<RA_PSEL(RA_PSEL_BUS, 5, 10)>, /* SDRAM_A12: P510 (A13) */
+				<RA_PSEL(RA_PSEL_BUS, 6, 8)>,  /* SDRAM_BA0: P608 (A14) */
+				<RA_PSEL(RA_PSEL_BUS, 13, 0)>, /* SDRAM_BA1: PD00 (A15) */
+				<RA_PSEL(RA_PSEL_BUS, 3, 2)>,  /* SDRAM_DQ0: P302 */
+				<RA_PSEL(RA_PSEL_BUS, 3, 1)>,  /* SDRAM_DQ1: P301 */
+				<RA_PSEL(RA_PSEL_BUS, 3, 0)>,  /* SDRAM_DQ2: P300 */
+				<RA_PSEL(RA_PSEL_BUS, 1, 12)>, /* SDRAM_DQ3: P112 */
+				<RA_PSEL(RA_PSEL_BUS, 1, 13)>, /* SDRAM_DQ4: P113 */
+				<RA_PSEL(RA_PSEL_BUS, 1, 14)>, /* SDRAM_DQ5: P114 */
+				<RA_PSEL(RA_PSEL_BUS, 1, 15)>, /* SDRAM_DQ6: P115 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 9)>,  /* SDRAM_DQ7: P609 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 11)>, /* SDRAM_DQ8: PA11 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 12)>, /* SDRAM_DQ9: PA12 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 13)>, /* SDRAM_DQ10: PA13 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 14)>, /* SDRAM_DQ11: PA14 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 10)>, /* SDRAM_DQ12: P610 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 11)>, /* SDRAM_DQ13: P611 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 12)>, /* SDRAM_DQ14: P612 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 13)>, /* SDRAM_DQ15: P613 */
+				<RA_PSEL(RA_PSEL_BUS, 6, 14)>, /* SDRAM_LDQM: P614 (DQM0) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 5)>, /* SDRAM_UDQM: PA05 (DQM1) */
+				<RA_PSEL(RA_PSEL_BUS, 10, 10)>, /* SDRAM_RAS: PA10 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 9)>, /* SDRAM_CAS: PA09 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 8)>, /* SDRAM_WE: PA08 */
+				<RA_PSEL(RA_PSEL_BUS, 10, 6)>, /* SDRAM_CKE: PA06 */
+				<RA_PSEL(RA_PSEL_BUS, 8, 13)>; /* SDRAM_CS: P813 (SDCS) */
+			drive-strength = "high";
+		};
+
+		group2 {
+			psels = <RA_PSEL(RA_PSEL_BUS, 10, 15)>; /* SDRAM_CLK: PA15 (SDCLK) */
+			drive-strength = "highspeed-high";
+		};
+	};
+};

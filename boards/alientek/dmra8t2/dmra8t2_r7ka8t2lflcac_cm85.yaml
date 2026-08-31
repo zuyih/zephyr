@@ -1,0 +1,22 @@
+identifier: dmra8t2/r7ka8t2lflcac/cm85
+name: Alientek ATK-DMRA8T2
+type: mcu
+arch: arm
+ram: 1024
+flash: 768
+toolchain:
+  - zephyr
+supported:
+  - gpio
+  - uart
+  - spi
+  - i2c
+  - pwm
+  - can
+  - counter
+  - watchdog
+  - crc
+  - sdhc
+  - usbd
+  - netif:eth
+vendor: alientek
