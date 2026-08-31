@@ -1,0 +1,6 @@
+board:
+  name: dmra8t2
+  full_name: ATK-DMRA8T2 Motor Control Board
+  vendor: alientek
+  socs:
+  - name: r7ka8t2lflcac
