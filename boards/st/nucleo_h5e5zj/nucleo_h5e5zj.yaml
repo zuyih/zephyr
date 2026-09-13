@@ -1,0 +1,25 @@
+identifier: nucleo_h5e5zj
+name: ST Nucleo H5E5ZJ
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+ram: 256
+flash: 4096
+supported:
+  - adc
+  - arduino_gpio
+  - arduino_i2c
+  - arduino_serial
+  - arduino_spi
+  - entropy
+  - gpio
+  - i2c
+  - netif:eth
+  - ptp_clock
+  - pwm
+  - rtc
+  - spi
+  - uart
+  - watchdog
+vendor: st
