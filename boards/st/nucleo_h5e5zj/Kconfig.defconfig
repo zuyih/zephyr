@@ -1,0 +1,11 @@
+# STM32H5E5ZJ Nucleo board configuration
+
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_NUCLEO_H5E5ZJ
+
+configdefault NET_L2_ETHERNET
+	default y
+
+endif # BOARD_NUCLEO_H5E5ZJ
