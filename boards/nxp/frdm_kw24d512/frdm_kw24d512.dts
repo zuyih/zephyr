@@ -1,0 +1,157 @@
+/*
+ * Copyright 2025 NXP
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <nxp/kinetis/kwx/nxp_kw2xd.dtsi>
+#include "frdm_kw24d512-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "NXP FRDM-KW24D512 board";
+	compatible = "nxp,frdm-kw24d512", "nxp,kw24d512", "nxp,kw2xd";
+
+	aliases {
+		led0 = &red_led;
+		led1 = &green_led;
+		led2 = &blue_led;
+		led3 = &blue_led_d8;
+		sw0 = &user_button_1;
+		sw1 = &user_button_2;
+		sw2 = &user_button_3;
+		sw3 = &user_button_4;
+	};
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,console = &uart1;
+		zephyr,shell-uart = &uart1;
+		zephyr,uart-pipe = &uart1;
+		zephyr,ieee802154 = &ieee802154;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		red_led: led_0 {
+			gpios = <&gpiod 4 GPIO_ACTIVE_LOW>;
+			label = "Red LED (D17)";
+		};
+
+		green_led: led_1 {
+			gpios = <&gpiod 5 GPIO_ACTIVE_LOW>;
+			label = "Green LED (D17)";
+		};
+
+		blue_led: led_2 {
+			gpios = <&gpiod 6 GPIO_ACTIVE_LOW>;
+			label = "Blue LED (D17)";
+		};
+
+		blue_led_d8: led_3 {
+			gpios = <&gpiod 7 GPIO_ACTIVE_LOW>;
+			label = "Blue LED (D8)";
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+
+		user_button_1: button_0 {
+			label = "User SW1";
+			gpios = <&gpioe 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			zephyr,code = <INPUT_KEY_0>;
+		};
+
+		user_button_2: button_1 {
+			label = "User SW2";
+			gpios = <&gpioe 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			zephyr,code = <INPUT_KEY_1>;
+		};
+
+		user_button_3: button_2 {
+			label = "User SW3";
+			gpios = <&gpiod 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			zephyr,code = <INPUT_KEY_2>;
+		};
+
+		user_button_4: button_3 {
+			label = "User SW4";
+			gpios = <&gpioa 19 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			zephyr,code = <INPUT_KEY_3>;
+		};
+	};
+};
+
+&sim {
+	pllfll-select = <KINETIS_SIM_PLLFLLSEL_MCGPLLCLK>;
+	er32k-select = <KINETIS_SIM_ER32KSEL_RTC>;
+};
+
+&{/cpus} {
+	timebase-frequency = <DT_FREQ_M(48)>;
+};
+
+&cpu0 {
+	clock-frequency = <DT_FREQ_M(48)>;
+};
+
+&uart1 {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-names = "default";
+};
+
+zephyr_udc0: &usbd {
+	status = "okay";
+	num-bidir-endpoints = <8>;
+};
+
+&gpioa {
+	status = "okay";
+};
+
+&gpiob {
+	status = "okay";
+};
+
+&gpioc {
+	status = "okay";
+};
+
+&gpiod {
+	status = "okay";
+};
+
+&gpioe {
+	status = "okay";
+};
+
+&ieee802154 {
+	status = "okay";
+};
+
+&flash0 {
+	partitions {
+		ranges;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		slot0_partition: partition@0 {
+			compatible = "zephyr,mapped-partition";
+			label = "image-0";
+			reg = <0x00000000 0x00070000>;
+		};
+
+		storage_partition: partition@70000 {
+			compatible = "zephyr,mapped-partition";
+			label = "storage";
+			reg = <0x00070000 0x00010000>;
+		};
+	};
+};
