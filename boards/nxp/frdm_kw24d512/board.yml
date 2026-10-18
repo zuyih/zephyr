@@ -1,0 +1,6 @@
+board:
+  name: frdm_kw24d512
+  full_name: FRDM-KW24D512
+  vendor: nxp
+  socs:
+    - name: mkw24d5
