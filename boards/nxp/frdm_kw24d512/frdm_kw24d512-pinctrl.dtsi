@@ -1,0 +1,17 @@
+/*
+ * Copyright (c) 2022, NXP
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <nxp/kinetis/MKW24D512VHA5-pinctrl.h>
+
+&pinctrl {
+	uart1_default: uart1_default {
+		group0 {
+			pinmux = <UART1_RX_PTE1>,
+				 <UART1_TX_PTE0>;
+			drive-strength = "low";
+			slew-rate = "fast";
+		};
+	};
+};
